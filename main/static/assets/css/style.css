@@ -487,7 +487,7 @@ body { background: var(--white); }
 \*-----------------------------------*/
 
 .hero {
-  background-image: url("../images/hero-banner.jpg");
+  background-image: url("../images/hero.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -499,6 +499,8 @@ body { background: var(--white); }
   text-align: center;
   padding-top: 125px;
 }
+
+
 
 .hero-title { margin-bottom: 20px; }
 

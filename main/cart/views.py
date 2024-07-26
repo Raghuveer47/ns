@@ -33,6 +33,10 @@ def modal(request):
         # Handle the inquiry using the helper function
         handle_inquiry(name, phone, email, people, travel_date)
 
-        return JsonResponse({'status': 'success', 'message': 'Thank you for your inquiry! A confirmation email has been sent to you.'})
+        # Add success message
+        messages.success(request, 'Thank you for your inquiry! A confirmation email has been sent to you.')
 
+        # Redirect to the home page
+        return redirect('home')
+      
     return render(request, 'modal.html')
