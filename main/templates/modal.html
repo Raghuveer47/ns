@@ -1,275 +1,199 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Modal</title>
-    <!-- Favicon -->
-    <link rel="icon" href="Hydrangeas.jpg" type="image/png">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/css/ionicons.min.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/css/flaticon.css' %}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
-
+    <title>Responsive Card</title>
     <style>
-        body {
-            background-image: url('https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721488824/Screenshot_2024-07-20_205003_w6xdn1.png'); /* Background image URL */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            overflow: hidden; /* Prevents scrolling */
-        }
-        .blurred-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-            backdrop-filter: blur(0px); /* Blur effect */
-            z-index: 999; /* Behind the modal but in front of body */
-        }
-        .modal-dialog {
-            max-width: 90%;
-            width: 90%;
-            height: 90%;
-            position: relative;
-            z-index: 1000; /* Above the blurred background */
-        }
-        .modal-content {
-            border-radius: 10px;
-            overflow: hidden;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* Transparent background */
-            color: white;
-            position: relative;
-            backdrop-filter: blur(5px); /* Blur effect */
-        }
-        .modal-body {
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            height: 100%;
-            overflow-y: auto; /* Make the modal body scrollable */
-        }
-        .promo-section {
-            position: relative;
-            height: 30vh; /* Adjust as needed for mobile view */
-            background: transparent; /* Transparent background */
-        }
-        .promo-section img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Ensures image covers the container and is cropped */
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+        *, *:after, *:before {
+            box-sizing: border-box;
         }
 
-        .form-section {
-            padding: 20px;
+        body {
+            font-family: "DM Sans", sans-serif;
+            line-height: 1.5;
+            background-color: #f1f3fb;
+            padding: 0 2rem;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        input {
+            appearance: none;
+            border-radius: 0;
+        }
+
+        .card {
+            margin: 2rem auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(51, 51, 51, 0.8); /* Slightly transparent */
+            width: 100%;
+            max-width: 425px;
+            background-color: #FFF;
             border-radius: 10px;
-            height: auto;
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .25);
+            padding: .75rem;
         }
-        .form-section img {
-            width: 40px;
-            height: 40px;
-            margin-bottom: -10px; /* Adjust the spacing as needed */
-            margin-left: 10px;
+
+        .card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            padding-bottom: 65%; /* Aspect ratio */
+            background-image: url('https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721490685/ns_100___1_-removebg-preview_rl49de.png');
+            background-repeat: no-repeat;
+            background-size: cover; /* Adjusts the size of the background image */
+            background-position: center; /* Center the background image */
         }
-        .tab-buttons {
+
+        .card-heading {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #735400;
+            line-height: 1.222;
+            text-align: center; /* Center the heading text */
+            padding: 1rem; /* Add some padding around the heading */
+        }
+
+        .card-form {
+            padding: 2rem 1rem 0;
+        }
+
+        .input {
             display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
+            flex-direction: column-reverse;
+            position: relative;
+            padding-top: 1.5rem;
+            &+.input {
+                margin-top: 1.5rem;
+            }
         }
-        .tab-buttons button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 30px;
-            background-color: #555;
-            margin: 0 5px;
-            cursor: pointer;
-            color: white;
+
+        .input-label {
+            color: #8597a3;
+            position: absolute;
+            top: 1.5rem;
+            transition: .25s ease;
         }
-        .tab-buttons button.active {
-            background-color: #007bff;
-            color: white;
+
+        .input-field {
+            border: 0;
+            z-index: 1;
+            background-color: transparent;
+            border-bottom: 2px solid #eee; 
+            font: inherit;
+            font-size: 1.125rem;
+            padding: .25rem 0;
+            &:focus, &:valid {
+                outline: 0;
+                border-bottom-color: #6658d3;
+                &+.input-label {
+                    color: #6658d3;
+                    transform: translateY(-1.5rem);
+                }
+            }
         }
-        form {
+
+        .action {
+            margin-top: 2rem;
+        }
+
+        .action-button {
+            font: inherit;
+            font-size: 1.25rem;
+            padding: 1em;
             width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-weight: 500;
+            background-color: #6658d3;
+            border-radius: 6px;
+            color: #FFF;
+            border: 0;
+            &:focus {
+                outline: 0;
+            }
         }
-        .input-group {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
+
+        .btn-skip {
+            font: inherit;
             font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+            padding: 0.5em;
+            width: 100%;
+            font-weight: 500;
+            background-color: #ccc;
+            border-radius: 6px;
+            color: #000;
+            border: 0;
+            margin-bottom: 1rem; /* Added space below the skip button */
+            &:focus {
+                outline: 0;
+            }
         }
-        .btn.active {
-            opacity: 1; /* Enabled state */
-        }
-        .btn:hover {
-            background-color: #218838;
-        }
-        .btn-secondary {
-            background-color: #dc3545;
-            border-radius: 50px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-secondary:hover {
-            background-color: #c82333;
-        }
-        .offer-title {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
+
+        .card-info {
+            padding: 1rem 1rem;
             text-align: center;
-            color: #ffdf00; /* Bright yellow color for sale */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Add text shadow */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: .875rem;
+            color: #8597a3;
         }
-        .offer-subtitle {
-            font-size: 1.5rem; /* Increase font size */
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold; /* Make text thicker */
-            color: white;
-            animation: blink 2s infinite;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Add text shadow */
+
+        .card-info a {
+            display: block;
+            color: #6658d3;
+            text-decoration: none;
         }
-        @keyframes blink {
-            0% { color: white; }
-            33% { color: red; }
-            66% { color: green; }
-            100% { color: blue; }
-        }
-        .skip-button {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .skip-button:hover {
-            background-color: #d32f2f;
-        }
-        @media (min-width: 768px) {
-            .modal-dialog {
-                max-width: 50%;
-                height: 60%;
-            }
-            .modal-body {
-                flex-direction: row;
-            }
-            .promo-section {
-                flex: 1;
-                height: 100%; /* Adjusts to the content's height on larger screens */
-            }
-            .form-section {
-                flex: 1;
-                height: auto;
-                padding: 30px;
-            }
-        }
-        .close-button-container {
-            position: absolute; /* Use fixed positioning */
-            top: 15px;
-            right: 15px;
-            z-index: 1050; /* Ensure the button is on top */
-        }
-        .close-button {
-            font-size: 2rem;
-            border-radius: 50px;
-            color: white;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
+
         @media (max-width: 768px) {
-            .promo-section img {
-                content: url('https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721490685/ns_100___1_-removebg-preview_rl49de.png'); /* Mobile-specific image URL */
+            .card-heading {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-heading {
+                font-size: 1.25rem;
             }
         }
     </style>
 </head>
 <body>
-
-<!-- Blurred Background -->
-<div class="blurred-background"></div>
-
-<!-- Close Button -->
-<div class="close-button-container">
-    <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">
-        &times;
-    </button>
-</div>
-
-<!-- Modal -->
-<div class="modal fade show" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false" style="display: block;">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="promo-section">
-                    <img id="promoImage" src="https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721491453/img2_d4zf4o.png"  alt="Promo Image">
+    <div class="container">
+        <div class="card">
+            <div class="card-image"></div> <!-- Image container -->
+            <h2 class="card-heading">
+                Claim for Free
+                <small>Trip to Malaysia</small>
+            </h2> <!-- Heading positioned below the image -->
+            <form id="offerForm" method="post" action="{% url 'modal' %}" class="card-form">
+                {% csrf_token %}
+                <button type="button" class="btn-skip" id="skipBtn">Skip</button> <!-- Skip button at the top -->
+                <div class="input">
+                    <input type="text" name="name" class="input-field" required/>
+                    <label class="input-label">Full name</label>
                 </div>
-                <div class="form-section">
-                    <div class="offer-title">
-                        SEASON SALE
-                        <img src="https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721539714/discount_7319388-removebg-preview_qmeuef.png" alt="Offer Icon">
+                <div class="input">
+                    <input type="email" name="email" class="input-field" required/>
+                    <label class="input-label">Email</label>
+                </div>
+                <div class="input">
+                    <div class="input-group-prepend">
+                        
                     </div>
-                    <div class="offer-subtitle">Enroll now to get a free chance to trip to Malaysia</div>
-                    
-                    <form id="offerForm" method="post" action="{% url 'modal' %}">
-                        {% csrf_token %}
-                        <div class="input-group mb-3">
-                            <input type="text" name="name" class="form-control" placeholder="Name" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">+91</span>
-                            </div>
-                            <input type="text" name="phone" class="form-control" placeholder="Enter Mobile Number" required>
-                        </div>
-                        <button type="submit" class="btn active" id="submitBtn">GET THE OFFER</button>
-                        <br>
-                        <button type="button" class="btn btn-secondary" id="skipBtn">Skip</button>
-                    </form>
+                    <input type="text" name="phone" class="input-field"  required/>
+                    <label class="input-label">Phone</label>
                 </div>
-            </div>
+                <div class="action">
+                    <button type="submit" class="action-button">GET THE OFFER</button>
+                </div>
+            </form>
+           
         </div>
     </div>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function() {
