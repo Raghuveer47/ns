@@ -1,0 +1,997 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ns Tours</title>
+  <style>
+    body {
+      height: 100vh;
+      background-color: #f8f9fa;
+    }
+
+    .modal-dialog {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .modal-content {
+      border-radius: 10px;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+      height: 100%;
+    }
+
+    .modal-body .promo-section {
+      width: 90%;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .modal-body .form-section {
+      width: 50%;
+      padding: 30px;
+      background-color: #333;
+      color: white;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-body .form-section .tab-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-body .form-section .tab-buttons button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 30px;
+      background-color: #555;
+      margin: 0 5px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .modal-body .form-section .tab-buttons button.active {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .modal-body .form-section form {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-body .form-section form .input-group {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .modal-body .form-section form .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .modal-body .form-section form .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .offer-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 767px) {
+      .modal-body {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .modal-body .promo-section {
+        width: 100%;
+        height: 200px;
+      }
+
+      .modal-body .form-section {
+        width: 100%;
+        padding: 20px;
+        height: auto;
+      }
+    }
+
+    .social-btn {
+      display: flex;
+      width: 200px;
+      padding: 5px 10px;
+      background-color: black;
+      color: white;
+      align-items: center;
+      justify-content: space-evenly;
+      border-radius: 30px;
+      margin-bottom: 5px;
+    }
+
+    center a {
+      text-decoration: none;
+    }
+
+    .telegram-color {
+      background-image: linear-gradient(to right, #4cadc9 5%, #5472d2 95%);
+    }
+
+    .whatsapp-color {
+      background-image: linear-gradient(to right, #25d366 5%, #21ad55 95%);
+    }
+
+    .instagram-color {
+      background-image: linear-gradient(to right, #914cc9 5%, #e4405f 95%);
+    }
+
+    .telegram-color:hover {
+      background-image: linear-gradient(to right, #5472d2 5%, #4cadc9 95%);
+    }
+
+    .whatsapp-color:hover {
+      background-image: linear-gradient(to right, #21ad55 5%, #25d366 95%);
+    }
+
+    .instagram-color:hover {
+      background-image: linear-gradient(to right, #e4405f 5%, #914cc9 95%);
+    }
+
+    .icons8-telegram-app,
+    .icons8-instagram,
+    .icons8-whatsapp {
+      width: 40px;
+      height: 40px;
+      background-size: 100%;
+    }
+
+    .social-btn p {
+      font-family: "Roboto", sans-serif;
+      font-size: 20px;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .navbar {
+      background-color: #333; /* Dark background for contrast */
+    }
+
+    .navbar-link {
+      color: white; /* White text for contrast */
+    }
+
+    .nav-open-btn, .nav-close-btn, .search-btn {
+      color: white; /* White color for the buttons */
+    }
+
+    .nav-open-btn:hover, .nav-close-btn:hover, .search-btn:hover {
+      color: #007bff; /* Blue color on hover for better visibility */
+    }
+  </style>
+  <!-- favicon -->
+  <link rel="shortcut icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body id="top">
+
+  <!-- #HEADER -->
+  <header class="header" data-header style="background-color: black;">
+    <div class="overlay" data-overlay></div>
+    <div class="header-top">
+      <div class="container">
+        <a href="tel:+60169706211" class="helpline-box">
+          <div class="icon-box">
+            <ion-icon name="call-outline"></ion-icon>
+          </div>
+          <div class="wrapper">
+            <p class="helpline-title">For Further Inquiries :</p>
+            <p class="helpline-number">+60169706211</p>
+          </div>
+        </a>
+        <a href="/home" class="logo">
+          <img src="{% static 'assets/images/logo-removebg-preview.png' %}" height="100" alt="Tourly logo">
+        </a>
+        <div class="header-btn-group">
+          <button class="search-btn" aria-label="Search">
+            <ion-icon name="search"></ion-icon>
+          </button>
+          <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+            <ion-icon name="menu-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-bottom" style="margin-top: 30px;">
+      <div class="container">
+        <ul class="social-list">
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-youtube"></ion-icon>
+            </a>
+          </li>
+        </ul>
+        <nav class="navbar" data-navbar>
+          <div class="navbar-top">
+            <a href="#" class="logo">
+              <img src="{% static 'assets/images/logo-removebg-preview.png' %}" alt="Tourly logo">
+            </a>
+            <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+          <ul class="navbar-list">
+            <li>
+              <a href="/home" class="navbar-link" data-nav-link>home</a>
+            </li>
+            <li>
+              <a href="/home" class="navbar-link" data-nav-link>about us</a>
+            </li>
+            <li>
+              <a href="#" class="navbar-link" data-nav-link>destination</a>
+            </li>
+            <li>
+              <a href="#" class="navbar-link" data-nav-link>packages</a>
+            </li>
+            <li>
+              <a href="#gallery" class="navbar-link" data-nav-link>gallery</a>
+            </li>
+            <li>
+              <a href="#contact" class="navbar-link" data-nav-link>contact us</a>
+            </li>
+          </ul>
+        </nav>
+        <button id="book-now-header" class="btn btn-secondary">Book Now</button>
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+    <article>
+      <!-- #PACKAGE -->
+      <section class="package" id="package">
+        <div class="container" style="margin-top: 200px;">
+          <p class="section-subtitle">Popular Packages</p>
+          <h2 class="h2 section-title">Checkout Our Packages</h2>
+          <p class="section-text">
+            Fusce hic augue velit wisi quibusdam pariatur, iusto primis, nec nemo, rutrum. Vestibulum cumque laudantium. Sit ornare mollitia tenetur, aptent.
+          </p>
+          <ul class="package-list">
+            <li>
+              <div class="package-card">
+                <figure class="card-banner">
+                  <img src="{% static 'assets/images/truly-malayasia.jpg' %}" alt="Experience The Great Holiday On Beach" loading="lazy">
+                </figure>
+                <div class="card-content">
+                  <h3 class="h3 card-title">Experience The Great Holiday On Malaysia</h3>
+                  <p class="card-text">
+                    Day 1: Pickup, hotel check-in, KL Tower, PETRONAS Towers, city sightseeing
+                    <br>Day 2: Batu Caves Murugan Temple, Genting Highlands (cable car)
+                    <br>Day 3: Port Dickson Beach, Bukit Bintang night view
+                    <br>Day 4: Malacca City tour
+                    <br>Day 5: Masjid India, Low Yat Plaza (electronics shopping), Putrajaya city visit, departure
+                  </p>
+                  <ul class="card-meta-list">
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="time"></ion-icon>
+                        <p class="text">5D/4N</p>
+                      </div>
+                    </li>
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="people"></ion-icon>
+                        <p class="text">pax: 10</p>
+                      </div>
+                    </li>
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="location"></ion-icon>
+                        <p class="text">Malaysia</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-price">
+                  <div class="wrapper">
+                    <p class="reviews">(25 reviews)</p>
+                    <div class="card-rating">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                    </div>
+                  </div>
+                  <!-- <p class="price">
+                    $750
+                    <span>/ per person</span>
+                  </p> -->
+                  <button id="book-now-1" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="package-card">
+                <figure class="card-banner">
+                  <img src="https://aviationweek.com/sites/default/files/styles/crop_freeform/public/2024-02/kedah_3.jpg?itok=k6_dzsqA" alt="Summer Holiday To The Oxolotan River" loading="lazy">
+                </figure>
+                <div class="card-content">
+                  <h3 class="h3 card-title">Summer Holiday To The Langkawi</h3>
+                  <p class="card-text">
+                    Day 1: Pickup to hotel check-in, KL Tower, PETRONAS Towers, city sightseeing
+                    <br>Day 2: Batu Caves Murugan Temple, Genting Highlands (cable car)
+                    <br>Day 3: Port Dickson Beach, Bukit Bintang night view
+                    <br>Day 4: Masjid India, Low Yat Plaza (electronics shopping), Putrajaya city visit, departure
+                  </p>
+                  <ul class="card-meta-list">
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="time"></ion-icon>
+                        <p class="text">3D/2N</p>
+                      </div>
+                    </li>
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="people"></ion-icon>
+                        <p class="text">pax: 10</p>
+                      </div>
+                    </li>
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="location"></ion-icon>
+                        <p class="text">Malaysia</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-price">
+                  <div class="wrapper">
+                    <p class="reviews">(20 reviews)</p>
+                    <div class="card-rating">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                    </div>
+                  </div>
+                  <!-- <p class="price">
+                    $220
+                    <span>/ per person</span>
+                  </p> -->
+                  <button id="book-now-2" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                </div>
+              </div>
+            </li>
+
+            <li>
+                <div class="package-card">
+                  <figure class="card-banner">
+                    <img src="https://res.cloudinary.com/dy9zlgjh6/image/upload/v1722760533/Gemini_Generated_Image_w6ux2ew6ux2ew6ux_huapks.jpg" alt="Malacca Adventure" loading="lazy">
+                  </figure>
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Malacca Adventure</h3>
+                    <p class="card-text">
+                      Day 1: Jonker Street, Jonker Walk Night Market, St. Paul's Church
+                      <br>Day 2: Bukit Cina Lighthouse, A'Famosa fortress, Cheng Hoon Teng Temple
+                    </p>
+                    <ul class="card-meta-list">
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="time"></ion-icon>
+                          <p class="text">2D/1N</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="people"></ion-icon>
+                          <p class="text">pax: 10</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="location"></ion-icon>
+                          <p class="text">Malacca</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-price">
+                    <div class="wrapper">
+                      <p class="reviews">(30 reviews)</p>
+                      <div class="card-rating">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </div>
+                    </div>
+                    <!-- <p class="price">
+                      $150
+                      <span>/ per person</span>
+                    </p> -->
+                    <button id="book-now-3" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                  </div>
+                </div>
+              </li>
+            <li>
+              <div class="package-card">
+                <figure class="card-banner">
+                  <img src="https://www.blsinternational.com/blog/wp-content/uploads/2023/04/Malaysia-Visa.jpeg" alt="Santorini Island's Weekend Vacation" loading="lazy">
+                </figure>
+                <div class="card-content">
+                  <h3 class="h3 card-title">Discover Malaysia under</h3>
+                  <p class="card-text">
+                    Day 1: Pickup at KILA Airport, straight to Batu Caves Murugan Temple (freshen up), then Genting Highland (full day) back to Kuala Lumpur City Hotel check-in.
+                    <br>Day 2: Pickup from Hotel (checkout) Kuala Lumpur City Tour, Putrajaya city Tour, Back to Departures.
+                  </p>
+                  <ul class="card-meta-list">
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="time"></ion-icon>
+                        <p class="text">2D/1N</p>
+                      </div>
+                    </li>
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="people"></ion-icon>
+                        <p class="text">pax: 10</p>
+                      </div>
+                    </li>
+                    <li class="card-meta-item">
+                      <div class="meta-box">
+                        <ion-icon name="location"></ion-icon>
+                        <p class="text">Malaysia</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-price">
+                  <div class="wrapper">
+                    <p class="reviews">(40 reviews)</p>
+                    <div class="card-rating">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                    </div>
+                  </div>
+                  <!-- <p class="price">
+                    $100
+                    <span>/ per person</span>
+                  </p> -->
+                  <button id="book-now-4" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                </div>
+              </div>
+            </li>
+            <li>
+                <div class="package-card">
+                  <figure class="card-banner">
+                    <img src="https://res.cloudinary.com/dy9zlgjh6/image/upload/v1722760676/Gemini_Generated_Image_3s0ko43s0ko43s0k_tygh1d.jpg" alt="Langkawi Ferry Adventure" loading="lazy">
+                  </figure>
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Langkawi Ferry Adventure</h3>
+                    <p class="card-text">
+                      Day 1: Eagle Square, Pantai Cenang Beach, Underwater World Langkawi
+                      <br>Day 2: Sky Bridge, Seven Wells Waterfall, Beachfront resort
+                    </p>
+                    <ul class="card-meta-list">
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="time"></ion-icon>
+                          <p class="text">2D/1N</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="people"></ion-icon>
+                          <p class="text">pax: 10</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="location"></ion-icon>
+                          <p class="text">Langkawi</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-price">
+                    <div class="wrapper">
+                      <p class="reviews">(40 reviews)</p>
+                      <div class="card-rating">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </div>
+                    </div>
+                    <!-- <p class="price">
+                      $200
+                      <span>/ per person</span>
+                    </p> -->
+                    <button id="book-now-5" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                  </div>
+                </div>
+              </li>
+   
+              <li>
+                <div class="package-card">
+                  <figure class="card-banner">
+                    <img src="https://res.cloudinary.com/dy9zlgjh6/image/upload/v1722760838/Gemini_Generated_Image_aj48neaj48neaj48_1_gbiuxl.jpg" alt="Penang Island Adventure" loading="lazy">
+                  </figure>
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Penang Island Adventure</h3>
+                    <p class="card-text">
+                      Day 1: Penang Bridge, George Town street art, local delicacies
+                      <br>Day 2: Hidden gems of Penang, local cultural experiences
+                    </p>
+                    <ul class="card-meta-list">
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="time"></ion-icon>
+                          <p class="text">2D/1N</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="people"></ion-icon>
+                          <p class="text">pax: 10</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="location"></ion-icon>
+                          <p class="text">Penang</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-price">
+                    <div class="wrapper">
+                      <p class="reviews">(35 reviews)</p>
+                      <div class="card-rating">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </div>
+                    </div>
+                    <!-- <p class="price">
+                      $180
+                      <span>/ per person</span>
+                    </p> -->
+                    <button id="book-now-6" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <div class="package-card">
+                  <figure class="card-banner">
+                    <img src="https://res.cloudinary.com/dy9zlgjh6/image/upload/v1722760972/Gemini_Generated_Image_crhhojcrhhojcrhh_mjixqm.jpg" alt="Port Dickson Day Tour" loading="lazy">
+                  </figure>
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Port Dickson Day Tour</h3>
+                    <p class="card-text">
+                      Sunbathing on the beach, golfing, water park adventure
+                    </p>
+                    <ul class="card-meta-list">
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="time"></ion-icon>
+                          <p class="text">1D</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="people"></ion-icon>
+                          <p class="text">pax: 10</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="location"></ion-icon>
+                          <p class="text">Port Dickson</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-price">
+                    <div class="wrapper">
+                      <p class="reviews">(50 reviews)</p>
+                      <div class="card-rating">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </div>
+                    </div>
+                    <!-- <p class="price">
+                      $120
+                      <span>/ per person</span>
+                    </p> -->
+                    <button id="book-now-7" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <div class="package-card">
+                  <figure class="card-banner">
+                    <img src="https://res.cloudinary.com/dy9zlgjh6/image/upload/v1722761104/Gemini_Generated_Image_t1zefkt1zefkt1ze_hvrdwv.jpg" alt="Cameron Highlands Adventure" loading="lazy">
+                  </figure>
+                  <div class="card-content">
+                    <h3 class="h3 card-title">Cameron Highlands Adventure</h3>
+                    <p class="card-text">
+                      Day 1: Tea plantations, Cameron Valley, butterfly farm
+                      <br>Day 2: Cozy chalet, local sightseeing
+                    </p>
+                    <ul class="card-meta-list">
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="time"></ion-icon>
+                          <p class="text">2D/1N</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="people"></ion-icon>
+                          <p class="text">pax: 10</p>
+                        </div>
+                      </li>
+                      <li class="card-meta-item">
+                        <div class="meta-box">
+                          <ion-icon name="location"></ion-icon>
+                          <p class="text">Cameron Highlands</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-price">
+                    <div class="wrapper">
+                      <p class="reviews">(45 reviews)</p>
+                      <div class="card-rating">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </div>
+                    </div>
+                    <!-- <p class="price">
+                      $250
+                      <span>/ per person</span>
+                    </p> -->
+                    <button id="book-now-8" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                  </div>
+                </div>
+              </li>
+  
+  
+          </ul>
+         <a href="/home"> <button class="btn btn-primary">Back to home</button></a>
+        </div>
+      </section>
+    </article>
+
+    <section id="tour-search" class="tour-search">
+        <div class="container">
+          <h2 class="section-title" style="color: white; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin-bottom: 50px;" >Book Your Tour Today</h2>
+          <form action="" method="post" class="tour-search-form">
+            {% csrf_token %}
+            <div class="input-wrapper">
+              <label for="name" class="input-label">Enter Your Name*</label>
+              <input type="text" name="name" id="name" required placeholder="Enter Your Name" class="input-field">
+            </div>
+            <div class="input-wrapper">
+              <label for="phone" class="input-label">Enter Your Phone Number*</label>
+              <input type="tel" name="phone" id="phone" required placeholder="Enter Your Phone Number" class="input-field">
+            </div>
+            <div class="input-wrapper">
+              <label for="email" class="input-label">Enter Your Email*</label>
+              <input type="email" name="email" id="email" required placeholder="Enter Your Email" class="input-field">
+            </div>
+            <div class="input-wrapper">
+              <label for="people" class="input-label">Number of People*</label>
+              <input type="number" name="people" id="people" required placeholder="No. of People" class="input-field">
+            </div>
+            <div class="input-wrapper">
+              <label for="travel_date" class="input-label">Interested Date to Travel*</label>
+              <input type="date" name="travel_date" id="travel_date" required class="input-field">
+            </div>
+            <button type="submit" class="btn btn-secondary">Inquire Now</button>
+          </form>
+        </div>
+        
+      </section>
+  </main>
+
+  <!-- #FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <img src="{% static 'assets/images/logo-removebg-preview.png' %}" alt="Tourly logo">
+          </a>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3983.6847166570324!2d101.685539245605!3d3.17741966247559!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc48136c999c5d%3A0xb8f4b35f09021e93!2sMenara%20KLH!5e0!3m2!1sen!2sin!4v1720945369097!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="footer-contact">
+          <h4 class="contact-title">Contact Us</h4>
+          <p class="contact-text">
+            Feel free to contact and reach us !!
+          </p>
+          <ul>
+            <li class="contact-item">
+              <ion-icon name="call-outline"></ion-icon>
+              <a href="tel:+60169706211" class="contact-link">+60169706211</a>
+            </li>
+            <li class="contact-item">
+              <ion-icon name="mail-outline"></ion-icon>
+              <a href="mailto:info@tourly.com" class="contact-link">info@tourly.com</a>
+            </li>
+            <li class="contact-item">
+              <ion-icon name="location-outline"></ion-icon>
+              <address>No - 2-3-10, Menara KLH, Condominium, Jalan Kasipillay, 51200, Kuala Lumpur, Malaysia</address>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-form">
+          <p class="form-text">
+            Subscribe to our newsletter for more updates & news !!
+            <br><br>
+            Chat with us
+          </p>
+          <a href="https://wa.me/+60123506518" target="_blank">
+            <div class="social-btn whatsapp-color">
+              <p>WhatsApp</p>
+              <div class="icons8-whatsapp"></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright">
+          &copy; 2024 <a href="#">Ns Tours & Travels</a>. All rights reserved
+        </p>
+        <ul class="footer-bottom-list">
+          <li>
+            <a href="#" class="footer-bottom-link">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#" class="footer-bottom-link">Terms & Conditions</a>
+          </li>
+          <li>
+            <a href="#" class="footer-bottom-link">FAQ</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- #GO TO TOP -->
+  <a href="#top" class="go-top" data-go-top>
+    <ion-icon name="chevron-up-outline"></ion-icon>
+  </a>
+
+  
+
+  <!-- custom js link -->
+  <script src="{% static 'assets/js/script.js' %}"></script>
+
+  <!-- Scroll to form section on button click -->
+  <script>
+    document.querySelectorAll('[id^="book-now"]').forEach(button => {
+      button.addEventListener('click', function() {
+        var modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+        modal.show();
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var whatsappButtons = document.getElementsByClassName("js-whatsapp");
+      var phoneNumber = "+60123506518"; // Your WhatsApp Business phone number with country code
+      var message = "Hello, I would like to know more about your services."; // Initial message sent to user
+
+      Array.prototype.forEach.call(whatsappButtons, function(button) {
+        button.addEventListener("click", function(e) {
+          e.preventDefault;
+          var whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+            message
+          )}`;
+          window.open(whatsappUrl, "_blank");
+        });
+      });
+    });
+
+    $(document).ready(function() {
+      function adjustImageForMobile() {
+        if ($(window).width() < 768) {
+          $('#promoSection').css('background-image', 'url(https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721236123/100_ip9pnw.webp)'); // Replace with your mobile image URL
+        } else {
+          $('#promoSection').css('background-image', 'url("https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721236123/100_ip9pnw.webp")'); // Replace with your desktop image URL
+        }
+      }
+
+      // Adjust image on document ready
+      adjustImageForMobile();
+
+      // Adjust image on window resize
+      $(window).resize(function() {
+        adjustImageForMobile();
+      });
+
+      // Form validation
+      $('#offerForm').on('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+        let isValid = true;
+        $('#offerForm input').each(function() {
+          if (!$(this).val()) {
+            isValid = false;
+            $(this).addClass('is-invalid');
+          } else {
+            $(this).removeClass('is-invalid');
+          }
+        });
+        if (isValid) {
+          $('#myModal').modal('hide'); // Close modal if form is valid
+        }
+      });
+
+      $('.btn').on('click', function(event) {
+        if ($('#offerForm')[0].checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+          $('#offerForm').addClass('was-validated');
+        }
+      });
+    });
+  </script>
+
+<script>
+    document.querySelectorAll('[id^="book-now"]').forEach(button => {
+      button.addEventListener('click', function() {
+        document.getElementById('tour-search').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+  var whatsappButtons = document.getElementsByClassName("js-whatsapp");
+  var phoneNumber = "+60123506518"; // Your WhatsApp Business phone number with country code
+  var message = "Hello, I would like to know more about your services."; // Initial message sent to user
+
+  Array.prototype.forEach.call(whatsappButtons, function (button) {
+    button.addEventListener("click", function (e) {
+      e.preventDefault;
+      var whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+        message
+      )}`;
+      window.open(whatsappUrl, "_blank");
+    });
+  });
+});
+
+
+$(document).ready(function() {
+		$('#myModal').modal({
+			backdrop: 'static', // Disable closing by clicking outside
+			keyboard: false // Disable closing with keyboard
+		});
+
+		function adjustImageForMobile() {
+			if ($(window).width() < 768) {
+				$('#promoSection').css('background-image', 'url(https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721236123/100_ip9pnw.webp)'); // Replace with your mobile image URL
+			} else {
+				$('#promoSection').css('background-image', 'url("https://res.cloudinary.com/dy9zlgjh6/image/upload/v1721236123/100_ip9pnw.webp")'); // Replace with your desktop image URL
+			}
+		}
+
+		// Adjust image on document ready
+		adjustImageForMobile();
+
+		// Adjust image on window resize
+		$(window).resize(function() {
+			adjustImageForMobile();
+		});
+
+		// Form validation
+		$('#offerForm').on('submit', function(event) {
+			event.preventDefault(); // Prevent form submission
+			let isValid = true;
+			$('#offerForm input').each(function() {
+				if (!$(this).val()) {
+					isValid = false;
+					$(this).addClass('is-invalid');
+				} else {
+					$(this).removeClass('is-invalid');
+				}
+			});
+			if (isValid) {
+				$('#myModal').modal('hide'); // Close modal if form is valid
+			}
+		});
+
+		$('.btn').on('click', function(event) {
+			if ($('#offerForm')[0].checkValidity() === false) {
+				event.preventDefault();
+				event.stopPropagation();
+				$('#offerForm').addClass('was-validated');
+			}
+		});
+	});
+
+  </script>
+
+  <!-- ionicon link -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- Bootstrap Bundle JS (with Popper) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
